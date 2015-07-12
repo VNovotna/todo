@@ -1,22 +1,39 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
 
-	<title>{ifset title}{include title|striptags} | {/ifset}Nette Web</title>
+        <title>{ifset title}{include title|striptags} | {/ifset}Tasks</title>
 
-	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
-         <link rel="stylesheet" href="style.css"  type="text/css">
-</head>
+        <link rel="shortcut icon" href="{$basePath}/favicon.ico">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="style.css"  type="text/css">
+    </head>
 
-<body>
-	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+    <body>
+        <div id="header"><h1>Tasks</h1></div>
+        <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
-	{include content}
+        {include content}
 
-	{block scripts}
-	<script src="//nette.github.io/resources/js/netteForms.min.js"></script>
-	{/block}
-</body>
+        {block scripts}
+        <script src="//nette.github.io/resources/js/netteForms.min.js"></script>
+        <script>
+            function allowDrop(ev) {
+                ev.preventDefault();
+            }
+
+            function drag(ev) {
+                ev.dataTransfer.setData("text", ev.target.id);
+            }
+
+            function drop(ev) {
+                ev.preventDefault();
+                var data = ev.dataTransfer.getData("text");
+                ev.target.appendChild(document.getElementById(data));
+            }
+        </script>
+        {/block}
+    </body>
 </html>
